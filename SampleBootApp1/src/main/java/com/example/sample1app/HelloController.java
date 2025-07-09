@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.sample1app.repositories.PersonRepository;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -34,5 +35,27 @@ public class HelloController {
 			ModelAndView mav) {
 		repository.saveAndFlush(Person);
 		return new ModelAndView("redirect:/");
+	}
+
+	@PostConstruct
+	public void init() {
+		// 1つ目のダミーデータ作成
+		Person p1 = new Person();
+		p1.setName("taro");
+		p1.setAge(39);
+		p1.setMail("taro@yamada");
+		repository.saveAndFlush(p1);
+		// 2つ目のダミーデータ作成
+		Person p2 = new Person();
+		p2.setName("hanako");
+		p2.setAge(28);
+		p2.setMail("hanako@flower");
+		repository.saveAndFlush(p2);
+		// 3つ目のダミーデータ作成
+		Person p3 = new Person();
+		p3.setName("sachiko");
+		p3.setAge(17);
+		p3.setMail("sachico@happy");
+		repository.saveAndFlush(p3);
 	}
 }
