@@ -6,15 +6,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HelloController {
-	private boolean flag = false;
 
 	@GetMapping()
 	public ModelAndView index(ModelAndView mav) {
-		flag = !flag;
+		String[] data = {"Windows", "macOS", "Linux", "ChromeOS"};
 		mav.setViewName("index");
 		mav.addObject("title", "Groovy templates");
 		mav.addObject("msg", "This is sample message!!");
-		mav.addObject("flag", flag);
+		mav.addObject("data", data);
 		return mav;
 	}
 }
