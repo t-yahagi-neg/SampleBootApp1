@@ -9,10 +9,9 @@ public class HelloController {
 
 	@GetMapping()
 	public ModelAndView index(ModelAndView mav) {
-		String[] data = {"Windows", "macOS", "Linux", "ChromeOS"};
 		mav.setViewName("index");
 		mav.addObject("title", "Groovy templates");
-		mav.addObject("msg", "This is include content sample.");
+		mav.addObject("msg", "レイアウト機能を使ったサンプルです。");
 		return mav;
 	}
 }
