@@ -8,11 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloController {
 
-	@GetMapping("/{month}")
-	public ModelAndView index(@PathVariable("month") int month, ModelAndView mav) {
+	@GetMapping()
+	public ModelAndView index(ModelAndView mav) {
 		mav.setViewName("index");
-		mav.addObject("msg", month + "月は？");
-		mav.addObject("month", month);
+		mav.addObject("msg", "メッセージだよ。");
 		return mav;
 	}
 }
