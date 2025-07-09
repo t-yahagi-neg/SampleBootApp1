@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class HelloController {
 
-	@GetMapping()
-	public String index(Model model) {
-		model.addAttribute("msg", "これはコントローラーに用意したメッセージです。");
+	@GetMapping("/{num}")
+	public String index(@PathVariable("num") int num, Model model) {
+		int res = 0;
+		for (int i = 1; i <= num; i++) {
+			res += i;
+		}
+		model.addAttribute("msg", "total: " + res);
 		return "index";
 	}
 }
