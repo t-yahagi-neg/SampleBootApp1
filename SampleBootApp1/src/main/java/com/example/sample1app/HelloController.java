@@ -12,8 +12,7 @@ public class HelloController {
 		String[] data = {"Windows", "macOS", "Linux", "ChromeOS"};
 		mav.setViewName("index");
 		mav.addObject("title", "Groovy templates");
-		mav.addObject("msg", "This is sample message!!");
-		mav.addObject("data", data);
+		mav.addObject("msg", "This is include content sample.");
 		return mav;
 	}
 }
