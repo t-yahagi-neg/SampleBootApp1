@@ -1,9 +1,12 @@
 package com.example.sample1app;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,6 +35,24 @@ public class HelloController {
 	@PostMapping()
 	@Transactional
 	public ModelAndView form(@ModelAttribute("formModel") Person Person,
+			ModelAndView mav) {
+		repository.saveAndFlush(Person);
+		return new ModelAndView("redirect:/");
+	}
+
+	@GetMapping("/edit/{id}")
+	public ModelAndView edit(@ModelAttribute Person Person,
+			@PathVariable("id") int id, ModelAndView mav) {
+		mav.setViewName("edit");
+		mav.addObject("title", "edit Person.");
+		Optional<Person> data = repository.findById((long) id);
+		mav.addObject("formModel", data.get());
+		return mav;
+	}
+
+	@PostMapping("/edit")
+	@Transactional
+	public ModelAndView update(@ModelAttribute Person Person,
 			ModelAndView mav) {
 		repository.saveAndFlush(Person);
 		return new ModelAndView("redirect:/");
