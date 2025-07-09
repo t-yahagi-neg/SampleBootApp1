@@ -11,7 +11,13 @@ public class HelloController {
 	@GetMapping()
 	public ModelAndView index(ModelAndView mav) {
 		mav.setViewName("index");
-		mav.addObject("msg", "メッセージだよ。");
+		String msg = """
+				<div class="border border-primary">
+					<h2>Message</h2>
+					<p>This is sample message!</p>
+				</div>
+				""";
+		mav.addObject("msg", msg);
 		return mav;
 	}
 }
