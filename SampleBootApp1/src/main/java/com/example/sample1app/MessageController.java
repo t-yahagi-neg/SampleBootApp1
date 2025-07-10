@@ -24,6 +24,9 @@ public class MessageController {
 	@Autowired
 	MessageRepository repository;
 
+	@Autowired
+	PersonDAOMessageImpl dao;
+
 	@PersistenceContext
 	EntityManager entityManager;
 
