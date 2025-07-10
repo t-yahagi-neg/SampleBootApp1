@@ -9,6 +9,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class PersonDAOPersonImpl implements PersonDAO<Person> {
 	private static final long serialVersionUID = 1L;
 
@@ -33,13 +34,11 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
 		return (Person)entityManager.createQuery("from Person where id = " + id).getSingleResult();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> findByName(String name) {
 		return (List<Person>)entityManager.createQuery("from Person where name = '" + name + "'").getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Person> find(String fstr) {
 		List<Person> list = null;
@@ -48,6 +47,15 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
 				.setParameter("fname", "%" + fstr + "%");
 		list = query.getResultList();
 		return list;
+	}
+
+	@Override
+	public List<Person> findByAge(int min, int max) {
+		return (List<Person>) entityManager
+				.createNamedQuery("findByAge")
+				.setParameter("min", min)
+				.setParameter("max", max)
+				.getResultList();
 	}
 
 }
