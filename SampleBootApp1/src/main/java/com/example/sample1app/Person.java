@@ -21,7 +21,7 @@ import lombok.Data;
 @NamedQueries(
 		@NamedQuery(
 				name="findByAge",
-				query="from Person where age >= :min adn age < :max"
+				query="from Person where age >= :min and age < :max"
 				)
 		)
 public class Person {
