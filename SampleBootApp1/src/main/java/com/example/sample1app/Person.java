@@ -38,6 +38,7 @@ public class Person {
 	private Integer age;
 
 	@Column(nullable = true)
+	@Phone
 	private String memo;
 
 }
