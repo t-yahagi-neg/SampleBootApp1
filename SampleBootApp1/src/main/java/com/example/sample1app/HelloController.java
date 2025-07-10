@@ -25,6 +25,18 @@ public class HelloController {
 	@Autowired
 	PersonRepository repository;
 
+	@Autowired
+	PersonDAOPersonImpl dao;
+
+	@GetMapping("/find")
+	public ModelAndView index(ModelAndView mav) {
+		mav.setViewName("find");
+		mav.addObject("msg", "Personのサンプルです。");
+		Iterable<Person> list = dao.getAll();
+		mav.addObject("data", list);
+		return mav;
+	}
+
 	@GetMapping()
 	public ModelAndView index(@ModelAttribute("formModel") Person Person,
 			ModelAndView mav) {
