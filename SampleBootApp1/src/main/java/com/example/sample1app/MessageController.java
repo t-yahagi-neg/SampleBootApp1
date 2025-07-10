@@ -37,7 +37,7 @@ public class MessageController {
 		mav.addObject("title", "Message");
 		mav.addObject("msg", "Messageのサンプルです。");
 		mav.addObject("formModel", message);
-		List<Message> list = (List<Message>) repository.findAll();
+		List<Message> list = dao.getAll();
 		mav.addObject("data", list);
 		return mav;
 	}
