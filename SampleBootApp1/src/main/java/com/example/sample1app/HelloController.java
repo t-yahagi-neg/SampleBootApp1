@@ -1,9 +1,12 @@
 package com.example.sample1app;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,17 +31,30 @@ public class HelloController {
 		mav.setViewName("index");
 		mav.addObject("title", "Hello page");
 		mav.addObject("msg", "this is JPA sample data.");
-		Iterable<Person> list = repository.findAll();
+		List<Person> list = repository.findAll();
 		mav.addObject("data", list);
 		return mav;
 	}
 
 	@PostMapping()
 	@Transactional
-	public ModelAndView form(@ModelAttribute("formModel") Person Person,
+	public ModelAndView form(@ModelAttribute("formModel") @Validated Person Person,
+			BindingResult result,
 			ModelAndView mav) {
-		repository.saveAndFlush(Person);
-		return new ModelAndView("redirect:/");
+		ModelAndView res = null;
+		System.out.println(result.getFieldErrors());
+		if (!result.hasErrors()) {
+			repository.saveAndFlush(Person);
+			res = new ModelAndView("redirect:/");
+		} else {
+			mav.setViewName("index");
+			mav.addObject("title", "Hello page");
+			mav.addObject("msg", "sorry, error is occurred...");
+			Iterable<Person> list = repository.findAll();
+			mav.addObject("datalist", list);
+			res = mav;
+		}
+		return res;
 	}
 
 	@GetMapping("/edit/{id}")
