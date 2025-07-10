@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -22,10 +25,14 @@ public class PersonDAOPersonImpl implements PersonDAO<Person> {
 
 	@Override
 	public List<Person> getAll() {
-		Query query = entityManager.createQuery("from Person");
-		@SuppressWarnings("unchecked")
-		List<Person> list = query.getResultList();
-		entityManager.close();
+		List<Person> list = null;
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Person> query = builder.createQuery(Person.class);
+		Root<Person> root = query.from(Person.class);
+		query.select(root);
+		list = (List<Person>) entityManager
+				.createQuery(query)
+				.getResultList();
 		return list;
 	}
 
