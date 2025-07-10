@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
@@ -17,10 +18,12 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name="people")
-@NamedQuery(
-		name="findWithName",
-		query="from Person where name like :fname"
-)
+@NamedQueries(
+		@NamedQuery(
+				name="findWithName",
+				query="from Person where name like :fname"
+				)
+		)
 public class Person {
 
 	@Id
