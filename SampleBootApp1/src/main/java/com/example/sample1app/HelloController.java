@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.sample1app.repositories.PersonRepository;
@@ -55,6 +56,23 @@ public class HelloController {
 	public ModelAndView update(@ModelAttribute Person Person,
 			ModelAndView mav) {
 		repository.saveAndFlush(Person);
+		return new ModelAndView("redirect:/");
+	}
+
+	@GetMapping("/delete/{id}")
+	public ModelAndView delete(@PathVariable("id") long id,
+			ModelAndView mav) {
+		mav.setViewName("delete");
+		mav.addObject("title", "Delete Person.");
+		mav.addObject("msg", "Can I delete this record?");
+		Optional<Person> data = repository.findById(id);
+		mav.addObject("formModel", data.get());
+		return mav;
+	}
+
+	@PostMapping("/delete")
+	public ModelAndView remove(@RequestParam("id") long id, ModelAndView mav) {
+		repository.deleteById(id);
 		return new ModelAndView("redirect:/");
 	}
 
