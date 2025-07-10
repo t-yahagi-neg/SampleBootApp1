@@ -1,5 +1,7 @@
 package com.example.sample1app;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
@@ -48,5 +51,9 @@ public class Person {
 	@Column(nullable = true)
 	@Phone(onlyNumber=true)
 	private String memo;
+
+	@OneToMany(mappedBy="Person")
+	@Column(nullable = true)
+	private List<Message> messages;
 
 }
