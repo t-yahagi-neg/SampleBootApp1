@@ -119,6 +119,16 @@ public class HelloController {
 		return new ModelAndView("redirect:/");
 	}
 
+	@GetMapping("/page/{page}")
+	public ModelAndView index(ModelAndView mav, @PathVariable("page") int page) {
+		mav.setViewName("find");
+		mav.addObject("msg", "Personのサンプルです。");
+		int num = 2;	// ページあたりの項目数
+		Iterable<Person> list = dao.getPage(page, num);
+		mav.addObject("data", list);
+		return mav;
+	}
+
 	@PostConstruct
 	public void init() {
 		// 1つ目のダミーデータ作成
