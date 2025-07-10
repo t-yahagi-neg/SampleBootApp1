@@ -20,8 +20,8 @@ import lombok.Data;
 @Table(name="people")
 @NamedQueries(
 		@NamedQuery(
-				name="findWithName",
-				query="from Person where name like :fname"
+				name="findByAge",
+				query="from Person where age >= :min adn age < :max"
 				)
 		)
 public class Person {
