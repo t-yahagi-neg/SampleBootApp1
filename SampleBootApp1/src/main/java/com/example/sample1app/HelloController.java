@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.sample1app.repositories.PersonRepository;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 @Controller
@@ -34,6 +35,24 @@ public class HelloController {
 		mav.addObject("msg", "Personのサンプルです。");
 		Iterable<Person> list = dao.getAll();
 		mav.addObject("data", list);
+		return mav;
+	}
+
+	@PostMapping("/find")
+	public ModelAndView search(HttpServletRequest request,
+			ModelAndView mav) {
+		mav.setViewName("find");
+		String param = request.getParameter("find_str");
+		if (param == "") {
+			mav = new ModelAndView("redirect:/find");
+		} else {
+			mav.addObject("title", "Find result");
+			mav.addObject("msg", "「" + param + "」の検索結果");
+			mav.addObject("value", param);
+			Person data = dao.findById(Integer.parseInt(param));
+			Person[] list = new Person[] {data};
+			mav.addObject("data", list);
+		}
 		return mav;
 	}
 
